@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Layout from './components/Layout';
+import WorkshopRegistration from './pages/WorkshopRegistration';
 import Home from './pages/Home';
 import Success from './pages/Success';
 import Verify from './pages/Verify';
@@ -18,7 +19,9 @@ function App() {
       }} />
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Navigate to="/registration" replace />} />
+          {/* Default home page is Register for Workshop */}
+          <Route index element={<WorkshopRegistration />} />
+          <Route path="workshop-registration" element={<WorkshopRegistration />} />
           <Route path="registration" element={<Home />} />
           <Route path="success/:id" element={<Success />} />
           <Route path="verify/:id" element={<Verify />} />

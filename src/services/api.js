@@ -118,3 +118,45 @@ export const getAllRegistrations = async () => {
     throw new Error('Failed to fetch registrations');
   }
 };
+
+// Function to handle Workshop Registrations (GenAI Workshop)
+export const submitWorkshopRegistration = async (data) => {
+  if (!GAS_URL) {
+    console.warn("GAS_URL not found, using mock success response.");
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ success: true, registrationId: data.registrationId });
+      }, 1500);
+    });
+  }
+
+  try {
+    const response = await fetch(GAS_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'registerWorkshop',
+        registrationId: data.registrationId,
+        fullName: data.fullName,
+        phone: data.phone,
+        email: data.email,
+        workshop: data.workshop || "GenAI Workshop",
+        timing: data.timing || "November 6, 7, 8, 2026 • 10:00 AM - 5:00 PM IST",
+        mode: data.mode, // "Online" or "Offline"
+        fee: data.fee,   // "₹499" or "₹599"
+        payOffline: data.payOffline || false,
+        paymentScreenshot: data.paymentScreenshot || null,
+        ticketImage: data.ticketImage || null
+      }),
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8'
+      }
+    });
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Workshop Registration API Error:", error);
+    throw new Error('Failed to connect to the server. Please check your internet connection.');
+  }
+};
+

@@ -1,6 +1,6 @@
 import { DEFAULT_EVENTS } from '../utils/eventsData';
 
-const GAS_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbzdKsY1U7wuUss6kxP0sHn0-V3UOoOZ9bgef_gNJJcjDFagqqFCbRLGtl2G_UJzXWJq/exec";
+const GAS_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbz9speekojPCeVoWxMRdStfCozsq3CuGzgOMfwg49TdusNyTYZer_O8mfmm6WdG8p-n/exec";
 
 // Fetch dynamic event list from backend with fallback
 export const getEvents = async () => {

@@ -153,6 +153,14 @@ function setup() {
     });
     eventSheet.autoResizeColumns(1, 8);
   }
+
+  // If there is an unused default "Sheet1", clean it up
+  try {
+    const defaultSheet = ss.getSheetByName("Sheet1");
+    if (defaultSheet && ss.getSheets().length > 1) {
+      ss.deleteSheet(defaultSheet);
+    }
+  } catch(e) {}
 }
 
 /**
@@ -163,7 +171,7 @@ function doPost(e) {
     const postData = JSON.parse(e.postData.contents);
     const action = postData.action;
 
-    if (action === "registerWorkshop") {
+    if (action === "registerWorkshop" || (action === "register" && postData.workshop)) {
       return handleWorkshopRegistration(postData);
     } else if (action === "register") {
       return handleRegistration(postData);
@@ -171,7 +179,7 @@ function doPost(e) {
       return handleMarkAttendance(postData);
     }
 
-    return createJsonResponse({ success: false, error: "Invalid action" });
+    return createJsonResponse({ success: false, error: "Invalid action: " + (action || "none") });
   } catch (error) {
     return createJsonResponse({ success: false, error: error.toString() });
   }
